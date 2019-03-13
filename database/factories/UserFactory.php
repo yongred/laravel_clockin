@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Company;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -17,10 +18,15 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => bcrypt('secret'), // password
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'phone' => $faker->phoneNumber,
+        'active' => 1,
+        'role_id' => 1, // 1 employee, 2 manageer
+        'manager_id' => $faker->numberBetween(3, 5),
+        'company_id' => $faker->numberBetween(1, 3),
         'remember_token' => Str::random(10),
     ];
 });
